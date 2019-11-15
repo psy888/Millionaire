@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Question {
     String question;
-    String[] answers = new String[4];
+    String[] answers;
     int rightAnswer;
 
     public Question(String question, String[] answers, int rightAnswer) {

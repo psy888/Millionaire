@@ -6,17 +6,28 @@ public class UI {
     public void printQuestion(Question q , int help){ //-1 - no Help
         System.out.println("Внимание вопрос :");
         System.out.println(q.getQuestion());
+        String[] answers = q.getAnswers();
 
-        for (int i = 0; i < q.getAnswers().length; i++) {
-            String answer = getLetter(i) + "). " + q.getAnswers()[i];
-            switch (help){
-                case Game.HELP_50:
+        switch (help){
+            case Game.HELP_50:
+                int wrongAnswCnt = 2;
+                    for (int i = 0; i < answers.length; i++) {
+                        if(i==q.rightAnswer){
+                            continue; // пропуск правильного ответа
+                        }else if(wrongAnswCnt>0){
+                            answers[i] = "";
+                            wrongAnswCnt--;
+                        }
+                    }
+                break;
+            case Game.HELP_CALL:
+                answers[q.getRightAnswer()] += " * ";
+                break;
+        }
 
-                    break;
-                case Game.HELP_CALL:
+        for (int i = 0; i < answers.length; i++) {
+            String answer = getLetter(i) + "). " + answers[i];
 
-                    break;
-            }
             if (i % 2 == 0) {
                 System.out.print(answer + "\t\t");
             } else {
