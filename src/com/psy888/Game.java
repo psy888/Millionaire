@@ -1,11 +1,14 @@
 package com.psy888;
 
+import java.util.Scanner;
+
 public class Game {
-    Question[] questions; //15 вопросов
-    int curQuestion;
-    String userName;
-    int [] prize;
-    UI ui; //User interface
+    private Question[] questions; //15 вопросов
+    int curPrize;
+    private String userName;
+    private int [] prize;
+    private UI ui; //User interface
+//    private static final String[] answerLetters = new String[]{"A","B","C","D"};
 
 
     {
@@ -24,20 +27,71 @@ public class Game {
 
 
     public void start(){
-        System.out.println("============================================================================");
-        System.out.println("======================= Как стать миллионером? =============================");
-        System.out.println("============================================================================");
+        ui.printMsg("============================================================================");
+        ui.printMsg("======================= Как стать миллионером? =============================");
+        ui.printMsg("============================================================================");
+        for (int i = 0; i < questions.length; i++) {
+            ask(i);
+            int answer = getAnswer();
+            if(isRightAnswer(questions[i],answer)){
+                curPrize = prize[i];
+            }else {
+               //проиграл
+                ui.printMsg("Неправильно!\nВаш выиграш составляет : " + getWonSum(i) + " грн.");
+                return;
+            }
+        }
+
+
     }
 
     private void shuffleQuestions(){
 
     }
 
+    private int getWonSum(int i){
+        int wonSum = 0;
+        if(i<5&&i>0){
+            wonSum = prize[1];
+        }else if(i>=5&&i<10){
+            wonSum = prize[5];
+        }else if(i>=10){
+            wonSum = prize[5];
+        }
+        return wonSum;
+    }
+
+
     public void ask(int i){
         ui.printQuestion(questions[i]);
     }
 
-    public boolean isRightAnswer(Question q, int index){
+    private int getAnswer(){
+        Scanner userInput = new Scanner(System.in);
+        ui.printMsg("Введите ответ (A,B,C,D) :");
+        int answer;
+        String userAnswer = userInput.nextLine().trim().toUpperCase();
+        switch (userAnswer){
+            case "A":
+                answer = 0;
+                break;
+            case "B":
+                answer = 1;
+                break;
+            case "C":
+                answer = 2;
+                break;
+            case "D":
+                answer = 3;
+                break;
+            default:
+                ui.printMsg("Неверный ввод :" +  userAnswer + " попробуйте еще.");
+                answer = getAnswer();
+        }
+        return answer;
+    }
+
+    private boolean isRightAnswer(Question q, int index){
         if(q.rightAnswer == index){
             return true;
         }

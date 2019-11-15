@@ -39,4 +39,8 @@ public class UI {
         }
         return letter;
     }
+
+    public void printMsg(String str){
+        System.out.println(str);
+    }
 }
