@@ -1,5 +1,7 @@
 package com.psy888;
 
+import java.util.Arrays;
+
 public class Question {
     String question;
     String[] answers = new String[4];
@@ -20,7 +22,7 @@ public class Question {
     }
 
     public String[] getAnswers() {
-        return answers;
+        return Arrays.copyOf(answers,answers.length);
     }
 
     public void setAnswers(String[] answers) {
@@ -34,4 +36,7 @@ public class Question {
     public void setRightAnswer(int rightAnswer) {
         this.rightAnswer = rightAnswer;
     }
+
+
+
 }
